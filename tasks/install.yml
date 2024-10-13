@@ -1,0 +1,11 @@
+---
+
+- name: install packages
+  apt:
+    name: "{{ utils_packages | union(utils_custom_packages) }}"
+    update_cache: true
+    cache_valid_time: 86400
+  register: apt_cache_result
+  until: "apt_cache_result is not failed"
+  retries: 3
+  delay: 10
